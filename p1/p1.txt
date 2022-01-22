@@ -1,0 +1,37 @@
+DATABASE FINAL PROJECT PROPOSAL IDEAS
+Author: Ruoda Yuan
+
+
+1. Database for 3-Way Ecommerce Marketplace
+In 2014, I launched an online modern furniture retailer Froy (https://froy.com).
+I built the store on Shopify, which is a 2-way marketplace consisting of customers and the retailer (us).
+Froy has 15 suppliers, none of whom can create their own wholesale account to manage product data,
+update stock, and other basic operations. Existing wholesale account plugins are lacking
+in features, cumbersome to use, or lack enforcement of standardizations (ex., product image format).
+
+I would be interested in building a database for a 3-way marketplace that consists of accounts/entities
+for primary retailer, 3rd-party sellers/suppliers, and end-customers. My present intuition is that
+we may need to consider distinct entitities for businesses and individuals. That allows the retailer
+and suppliers to support employee accounts, each of whom can even be customers of the store.
+The marketplace will also contain the usual ecommerce entities - orders, products, and collections.
+
+Products are hard and have many attributes - unique handle, name, price, SKU, type hierarchy, stock, 
+variants (colors, sizes), collection, description, and reviews. Orders will have products, customer, 
+fulfillment status (paid, shipped, delivered, refund requested, etc.). Collections are a set of products
+filtered for some set of rules.
+
+
+2. Database for Live Streaming App
+As part of my iOS App Dev class' final project, we need to build a fully functioning app that can
+publish to the Apple App Store. I'd love to build something modern (i.e., use the most recent features
+on Swift/XCode announced at WWDC) that can integrate knolwedge from other classes such as Databases.
+Although boomers claim to hate apps like TikTok, I believe they are a study in great consumer tech
+and application development. I would love to build some live streaming app for educational purpose.
+On the surface, the project is simple - imagine an app solely focused on building around 
+Twitch's Just Chatting channel or TikTok/Instagram's live streaming feature, nothing more.
+
+The 
+
+
+3. Database for Beginner-Friendly Trading App
+
