@@ -30,8 +30,32 @@ and application development. I would love to build some live streaming app for e
 On the surface, the project is simple - imagine an app solely focused on building around 
 Twitch's Just Chatting channel or TikTok/Instagram's live streaming feature, nothing more.
 
-The 
+The main product/entity will be the different video streams, which can have attributes such as 
+genre (chatting, study-along, OOTD, reactions/watch-together, etc.), time streamed, viewer count,
+chat log (chatroom during stream), etc. Users will consist of standard social media attributes - 
+username, profile description, inventory of past streams, followers, following, liked streams, 
+subscriptions, and credits (platform currency that the user can gift to streamers during their streams).
+
+I will have to revise the entity-relationship model in full as many of these attributes will likely
+have to be carved out into distinct entitites. Other entities will likely be built off of the,
+such as collections/pages for displaying all strams of a certain genre.
+
+
+*** For grading, please do not consider last proposal if it hurts me... I am laying it out now 
+for brainstorming purpose as I'm new to DBMS as a topic and still learning what is realistic and not.
+However, if you have any ideas or feedback, I would appreciate any opinons/comments.***
 
 
 3. Database for Beginner-Friendly Trading App
+Similar to the objectives from proposal #2, this proposal intends to integrate iOS app dev concepts
+with DBMS knowledge. I would likely on crypto trading/wallet app to focus on one asset (and one that
+is still very much a wild west). Crypto is still an unknown to many people, and differences between
+different cryptocurrencies is impossible for many to decipher (even reading a white paper is hard).
 
+I'll focus the project on just building a basic crypto trading app with very small adjustments for
+profile/description requirements for each crypto profile to provide simple, entry-level explanation
+for what makes that particular currency unique.
+
+TBD on the entity-relationship model. I'm taking the weekend to explore existing apps and id best approach.
+Though my knowledge of crypto is least strong relative to the other 2 proposals, I suspect this
+proposal might be just as if not more implementable from a database management standpoint.
