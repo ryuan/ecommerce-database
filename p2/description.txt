@@ -1,41 +1,24 @@
 PROJECT PROPOSAL
 ---------------------------------
 
-NOTE: draw.io doesn't have double boxes for weak entities or dashed underlines.
-Their double box entity option doesn't allow me to create attributes list. 
-Therefore, the ER Diagram will use dotted borders to indicate weak entities and
-italicized underlines to indicate weak entity attributes.
+My project will be for a 2-sided ecommerce marketplace, meaning there will be open accounts
+for both customers and 3rd-party sellers (and of course, the marketplace owner/admin account 
+can always directly access and modify the database, allowing it to create products just like
+how Amazon or Wayfair sell their own branded or directly sourced products for higher margins).
 
-The app, project Ekko, will be a 'slice-of-life' live streaming platform.
-The app allows users to watch streams of other people broadcasting their lives,
-bucketed into curated genres. Streamers can broadcast themselves while playing
-music directly from the app (that fans can listen along to), overlay text/visual content,
-and host a chatroom for fans to socialize together or engage the streamer.
+To keep the early version of the database simple, I am focusing only on implementing the core
+entities and relationships. For each distinct primary key (product_id) for the Product entity, 
+there will be associated weak entity Variant. Each variant represents potential size or color
+variations of the otherwise same product (if there's just the main variant, set it to default).
 
-An example of a stream would be a 'study-along' genre stream, where the streamer broadcasts
-herself in a library/home studying, while playing a playlist through the app, 
-overlaying text to show the song being played along with personal message
-(greeting + what she's studying), and even AR butterflies floating around her for added aesthetics.
-The chatroom will have 'fans' just casually chatting (complaining about their day,
-stress with school, well-wishes to others, sharing memes and Twitch-like emojis, etc.).
-The idea is to strike a similar vibe to the popular Lofi girl but in real life.
-YouTube Lofi girl stream: (https://www.youtube.com/watch?v=5qap5aO4i9A)
+Products can be added to collections, which can help organize the app so product types and other
+pages can just populate with products in a given collection.
 
-To narrow the scope of the project and make the database more realistic for implementation,
-certain non-core features may need to be removed from the early ERD. The main entity, User,
-will consist of required email, phone_number (verification), and password fields to register.
-The username will be randomly generated, and all other fields will be set to null so that
-user can begin using the app with minimum friction. Birthdate will be used to determine if
-user is old enough to legally live stream, and private will be set to public by default.
+The Seller entity can create products to add to the marketplace. Sellers are also associated with
+orders that include products that they created. The Customer entity has a relationship with the
+Order entity for obvious reasons - each order belongs to the customer that placed it, which means
+a one-to-many relationship.
 
-The app will use a follow network, so users can follow someone without the other user necessarily
-following back. The request_status field will be populated based on the other user's private field.
-
-The Song, Album, and Playlist entities are basically copies from the Youtify assignment.
-The playlist can be used as background music when users starts a stream.
-
-The main content of the app, the Stream entity, is a video (how it is recorded, stored, and served
-will likely be very challenging and I'll need to investigate more).
-Each stream comes with several weak entities (since they can only exist with a particular stream):
-Chatroom and Message are self-explanatory, and Overlay represents any aesthetic AR or text graphics
-that the streamer can overlay on their live streams.
+The Order entity has many of the expected attributes, but notice that some of the attributes are
+calculated based on the product values in the order as well as any applied discount. The entity
+Discount is the only added flair I'm adding to make the database a bit broader/realistic.
