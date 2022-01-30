@@ -22,3 +22,5 @@ a one-to-many relationship.
 The Order entity has many of the expected attributes, but notice that some of the attributes are
 calculated based on the product values in the order as well as any applied discount. The entity
 Discount is the only added flair I'm adding to make the database a bit broader/realistic.
+Discounts can have types (percent, fixed dollar), minimum order value before discounts can be applied,
+as well as an effective start and end date for the discount code.
