@@ -32,12 +32,13 @@ CREATE TABLE images (
 
 CREATE TABLE variants (
     sku varchar(),
+    opt_title varchar() NOT NULL,
     opt_name varchar(),
     price integer,
     quantity integer,
     weight integer,
     p_id integer,
-    PRIMARY KEY (p_id, sku, opt_name, quantity, weight),
+    PRIMARY KEY (p_id, sku, opt_title, opt_name, quantity, weight),
     FOREIGN KEY (p_id) REFERENCES products(p_id) ON DELETE CASCADE
 );
 
