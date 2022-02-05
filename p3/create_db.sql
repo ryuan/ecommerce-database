@@ -9,7 +9,6 @@
 CREATE TABLE products (
     p_id integer,
     p_name varchar() NOT NULL,
-    p_description varchar(),
     type varchar(),
     vendor varchar(),
     PRIMARY KEY (p_id)
@@ -32,13 +31,13 @@ CREATE TABLE images (
 
 CREATE TABLE variants (
     sku varchar(),
-    opt_title varchar() NOT NULL,
-    opt_name varchar(),
+    var_title varchar() NOT NULL,
+    var_name varchar() NOT NULL,
     price integer,
     quantity integer,
     weight integer,
     p_id integer,
-    PRIMARY KEY (p_id, sku, opt_title, opt_name, quantity, weight),
+    PRIMARY KEY (p_id, sku, var_title, var_name, price, quantity, weight),
     FOREIGN KEY (p_id) REFERENCES products(p_id) ON DELETE CASCADE
 );
 
