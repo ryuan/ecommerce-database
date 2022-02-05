@@ -150,3 +150,4 @@ CREATE TABLE ord_cust (
     FOREIGN KEY (o_id) REFERENCES orders(o_id),
     FOREIGN KEY (cust_id) REFERENCES customers(cust_id)
 );
+
