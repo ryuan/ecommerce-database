@@ -1,0 +1,15 @@
+PROJECT UPDATES
+---------------------------------------------
+
+After speaking to TA on Monday, I've updated and reduced the scope of my project to something
+more reasonable, but extendable if needed for added functionalities.
+
+First and foremost, the tax-related attributes have been removed. I would have needed to create
+an entire set of taxes for different city, county, and state, perhaps even internationally to 
+match with the random address generator from Python's Faker module.
+
+In addition, calculations of this sort should be done at the application level and handed down
+to the DBMS simply for storage as a record of how much tax was paid. The calculations should
+not be done in the database itself.
+
+Additionally the Discounts entity has been removed as it was not a critical part of the database.
