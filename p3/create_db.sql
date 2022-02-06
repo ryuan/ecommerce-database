@@ -8,10 +8,10 @@
 
 CREATE TABLE products (
     p_id integer,
-    p_name varchar() NOT NULL,
-    type varchar(),
-    vendor varchar(),
-    p_description varchar(),
+    p_name varchar(255) NOT NULL,
+    type varchar(255),
+    vendor varchar(255),
+    p_description varchar(255),
     PRIMARY KEY (p_id)
 );
 
@@ -20,7 +20,7 @@ CREATE TABLE products (
 --
 
 CREATE TABLE images (
-    url varchar(),
+    url varchar(255),
     p_id integer NOT NULL,
     PRIMARY KEY (url)
     FOREIGN KEY (p_id) REFERENCES products(p_id) ON DELETE CASCADE
@@ -31,9 +31,9 @@ CREATE TABLE images (
 --
 
 CREATE TABLE variants (
-    sku varchar(),
-    var_title varchar() NOT NULL,
-    var_name varchar() NOT NULL,
+    sku varchar(255),
+    var_title varchar(255) NOT NULL,
+    var_name varchar(255) NOT NULL,
     price integer,
     quantity integer,
     weight integer,
@@ -48,8 +48,8 @@ CREATE TABLE variants (
 
 CREATE TABLE collections (
     c_id integer,
-    c_name varchar() NOT NULL,
-    c_description varchar(),
+    c_name varchar(255) NOT NULL,
+    c_description varchar(255),
     PRIMARY KEY (c_id)
 );
 
@@ -59,13 +59,14 @@ CREATE TABLE collections (
 
 CREATE TABLE orders (
     o_id integer,
-    ship_opt varchar() NOT NULL,
+    ship_opt varchar(255) NOT NULL,
     ship_cost integer NOT NULL,
-    bill_add varchar() NOT NULL,
-    ship_add varchar() NOT NULL,
-    o_date datetime() NOT NULL,
-    o_phone varchar() NOT NULL,
-    o_status varchar() NOT NULL,
+    bill_add varchar(255) NOT NULL,
+    ship_add varchar(255) NOT NULL,
+    o_date date NOT NULL,
+    o_time time NOT NULL,
+    o_phone varchar(255) NOT NULL,
+    o_status varchar(255) NOT NULL,
     PRIMARY KEY (o_id)
 );
 
@@ -75,12 +76,12 @@ CREATE TABLE orders (
 
 CREATE TABLE customers (
     cust_id integer,
-    cust_name varchar() NOT NULL,
-    cust_email varchar() NOT NULL,
-    cust_password varchar() NOT NULL,
-    def_bill_add varchar(),
-    def_ship_add varchar(),
-    cust_phone varchar() NOT NULL,
+    cust_name varchar(255) NOT NULL,
+    cust_email varchar(255) NOT NULL,
+    cust_password varchar(255) NOT NULL,
+    def_bill_add varchar(255),
+    def_ship_add varchar(255),
+    cust_phone varchar(255) NOT NULL,
     PRIMARY KEY (cust_id)
 );
 
@@ -90,11 +91,11 @@ CREATE TABLE customers (
 
 CREATE TABLE sellers (
     s_id integer,
-    s_name varchar() NOT NULL,
-    s_email varchar() NOT NULL,
-    s_password varchar() NOT NULL,
-    bus_name varchar() NOT NULL,
-    bus_phone varchar() NOT NULL,
+    s_name varchar(255) NOT NULL,
+    s_email varchar(255) NOT NULL,
+    s_password varchar(255) NOT NULL,
+    bus_name varchar(255) NOT NULL,
+    bus_phone varchar(255) NOT NULL,
     ein integer NOT NULL,
     PRIMARY KEY (s_id)
 );

@@ -16,7 +16,7 @@ c_pre_1 = ["Summer", "Back-to-School", "Independence Day", "Christmas", "Labor D
 c_pre_2 = ["Modern Furniture", "Essentials", "Jeans", "Must-Have Tech", "Tech Lovers", "Ski and Snowboard"]
 c_suf = ["Collection", "Sale", "Releases", "Flash Sale", "Sales Event"]
 ship_opts = ["Ground", "2-Day", "Next Day"]
-ship_costs = [0, 10, 20]
+ship_costs = [5, 10, 20]
 order_statuses = ["Canceled", "Processed", "Shipped", "Delivered", "Refund Requested", "Refunded"]
 
 
@@ -41,7 +41,7 @@ for i in range(30):
     vendor = vendors[random.randint(0,len(vendors)-1)]
     p_description = fake.paragraph(nb_sentences=5)
     
-    products.append(f"INSERT INTO products VALUES ({i}, {p_name}, {type}, {vendor}, {p_description});")
+    products.append(f"INSERT INTO products VALUES ({i}, '{p_name}', '{type}', '{vendor}', '{p_description}');")
     
     #Generate fake images
     for j in range(random.randint(1,4)):
@@ -49,7 +49,7 @@ for i in range(30):
         img_vendor = vendor.lower().replace(" ","_")
         url = f"{img_name}_{img_vendor}_{j}.jpg"
 
-        images.append(f"INSERT INTO images VALUES ({url}, {i});")
+        images.append(f"INSERT INTO images VALUES ('{url}', {i});")
 
     #Generate variants
     title_choice = random.randint(0,len(var_titles)-1)
@@ -67,7 +67,7 @@ for i in range(30):
         quantity = random.randint(0,12)
         weight = int(base_weight + (k * round(base_price * 0.05, 0)))
 
-        variants.append(f"INSERT INTO variants VALUES ({sku}, {var_title}, {var_name}, {price}, {quantity}, {weight});")
+        variants.append(f"INSERT INTO variants VALUES ('{sku}', '{var_title}', '{var_name}', {price}, {quantity}, {weight}, {i});")
 
 
 #Generate fake collections
@@ -78,21 +78,23 @@ for i in range(10):
     c_name = pre_1_choice + " " + pre_2_choice + " " + suf_choice
     c_description = fake.paragraph(nb_sentences=3)
 
-    collections.append(f"INSERT INTO collections VALUES ({i}, {c_name}, {c_description});")
+    collections.append(f"INSERT INTO collections VALUES ({i}, '{c_name}', '{c_description}');")
 
 
 #Generate fake orders
 for i in range(20):
-    ship_opt = random.randint(0, len(ship_opts)-1)
-    ship_cost = ship_opts[ship_opt]
+    option = random.randint(0, len(ship_opts)-1)
+    ship_opt = ship_opts[option]
+    ship_cost = ship_costs[option]
     person = fake.profile()
     bill_add = person['address']
     ship_add = person['residence']
     o_date = fake.date_this_decade()
+    o_time = fake.time()
     o_phone = fake.phone_number()
     o_status = order_statuses[random.randint(0, len(order_statuses)-1)]
 
-    orders.append(f"INSERT INTO orders VALUES ({i}, {ship_opt}, {ship_cost}, {bill_add}, {ship_add}, {o_date}, {o_phone}, {o_status});")
+    orders.append(f"INSERT INTO orders VALUES ({i}, '{ship_opt}', {ship_cost}, '{bill_add}', '{ship_add}', '{o_date}', '{o_time}', '{o_phone}', '{o_status}');")
 
 
 #Generate fake customers
@@ -105,7 +107,7 @@ for i in range(15):
     def_ship_add = person['residence']
     cust_phone = fake.phone_number()
 
-    customers.append(f"INSERT INTO customers VALUES ({i}, {cust_name}, {cust_email}, {cust_password}, {def_bill_add}, {def_ship_add}, {cust_phone});")
+    customers.append(f"INSERT INTO customers VALUES ({i}, '{cust_name}', '{cust_email}', '{cust_password}', '{def_bill_add}', '{def_ship_add}', '{cust_phone}');")
 
 
 #Generate fake sellers
@@ -113,12 +115,12 @@ for i in range(10):
     s_name = fake.name()
     s_email = fake.email()
     s_password = fake.sha256(raw_output=False)
-    bus_name = fake.company(),
+    bus_name = fake.company()
     bus_phone = fake.phone_number()
     dummy_ssn = fake.ssn().replace("-","")
     ein = dummy_ssn[:3] + "-" + dummy_ssn[3:]
 
-    sellers.append(f"INSERT INTO sellers VALUES ({i}, {s_name}, {s_email}, {s_password}, {bus_name}, {bus_phone}, {ein});")
+    sellers.append(f"INSERT INTO sellers VALUES ({i}, '{s_name}', '{s_email}', '{s_password}', '{bus_name}', '{bus_phone}', '{ein}');")
 
 
 #Generate coll_prod relationships
@@ -160,39 +162,82 @@ for i in range(len(orders)):
     ord_cust.append(f"INSERT INTO ord_cust VALUES ({i},{selection});")
 
 
-
-print("---------PRODUCTS INSERTION CODE---------")
+print("""
+--
+-- Data for Name: products; Type: TABLE DATA
+--
+""")
 for product in products:
     print(product)
-print("---------IMAGES INSERTION CODE---------")
+print("""
+--
+-- Data for Name: images; Type: TABLE DATA
+--
+""")
 for image in images:
     print(image)
-print("---------VARIANTS INSERTION CODE---------")
+print("""
+--
+-- Data for Name: variants; Type: TABLE DATA
+--
+""")
 for variant in variants:
     print(variant)
-print("---------COLLECTIONS INSERTION CODE---------")
+print("""
+--
+-- Data for Name: collections; Type: TABLE DATA
+--
+""")
 for collection in collections:
     print(collection)
-print("---------ORDERS INSERTION CODE---------")
+print("""
+--
+-- Data for Name: orders; Type: TABLE DATA
+--
+""")
 for order in orders:
     print(order)
-print("---------CUSTOMERS INSERTION CODE---------")
+print("""
+--
+-- Data for Name: customers; Type: TABLE DATA
+--
+""")
 for customer in customers:
     print(customer)
-print("---------SELLERS INSERTION CODE---------")
+print("""
+--
+-- Data for Name: sellers; Type: TABLE DATA
+--
+""")
 for seller in sellers:
     print(seller)
 
 
-print("---------COLL_PROD INSERTION CODE---------")
+print("""
+--
+-- Data for Name: coll_prod; Type: TABLE DATA
+--
+""")
 for r in coll_prod:
     print(r)
-print("---------SELL_PROD INSERTION CODE---------")
+print("""
+--
+-- Data for Name: sell_prod; Type: TABLE DATA
+--
+""")
 for r in sell_prod:
     print(r)
-print("---------ORD_PROD INSERTION CODE---------")
+print("""
+--
+-- Data for Name: ord_prod; Type: TABLE DATA
+--
+""")
 for r in ord_prod:
     print(r)
-print("---------ORD_CUST INSERTION CODE---------")
+print("""
+--
+-- Data for Name: ord_cust; Type: TABLE DATA
+--
+""")
 for r in ord_cust:
     print(r)
