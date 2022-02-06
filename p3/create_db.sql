@@ -11,6 +11,7 @@ CREATE TABLE products (
     p_name varchar() NOT NULL,
     type varchar(),
     vendor varchar(),
+    p_description varchar(),
     PRIMARY KEY (p_id)
 );
 
@@ -60,12 +61,8 @@ CREATE TABLE orders (
     o_id integer,
     ship_opt varchar() NOT NULL,
     ship_cost integer NOT NULL,
-    subtotal integer NOT NULL,
-    tax integer NOT NULL,
-    total integer NOT NULL,
     bill_add varchar() NOT NULL,
     ship_add varchar() NOT NULL,
-    o_email varchar() NOT NULL,
     o_date datetime() NOT NULL,
     o_phone varchar() NOT NULL,
     o_status varchar() NOT NULL,
@@ -84,7 +81,6 @@ CREATE TABLE customers (
     def_bill_add varchar(),
     def_ship_add varchar(),
     cust_phone varchar() NOT NULL,
-    tax_exempt boolean NOT NULL,
     PRIMARY KEY (cust_id)
 );
 
