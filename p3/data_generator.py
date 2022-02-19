@@ -10,8 +10,8 @@ fake.add_provider(faker_commerce.Provider)
 
 #Prepare additional pool of data to randomly draw from
 vendors = ["Billabong", "Burton", "Bauer", "CCM", "West Elm", "Adidas", "Zara", "Anthropologie"]
-var_titles = ["Title", "Size", "Color"]
-var_names = [["Default"],["Small", "Medium", "Large"], ["Blue","Red","Green","Black","White"]]
+v_titles = ["Title", "Size", "Color"]
+v_names = [["Default"],["Small", "Medium", "Large"], ["Blue","Red","Green","Black","White"]]
 c_pre_1 = ["Summer", "Back-to-School", "Independence Day", "Christmas", "Labor Day", "Memorial Day"]
 c_pre_2 = ["Modern Furniture", "Essentials", "Jeans", "Must-Have Tech", "Tech Lovers", "Ski and Snowboard"]
 c_suf = ["Collection", "Sale", "Releases", "Flash Sale", "Sales Event"]
@@ -23,15 +23,18 @@ order_statuses = ["Canceled", "Processed", "Shipped", "Delivered", "Refund Reque
 #Initialize insertion code containers
 products = []
 images = []
-variants = []
+variants = [] 
 collections = []
 orders = []
 customers = []
 sellers = []
 coll_prod = []
 sell_prod = []
-ord_prod = []
+ord_var = []
 ord_cust = []
+
+v_indices = []      #used to store v_id for order generation
+v_free_index = 0    #used to track next index available for variant index assignment
 
 
 #Generate fake products
@@ -52,22 +55,25 @@ for i in range(30):
         images.append(f"INSERT INTO images VALUES ('{url}', {i});")
 
     #Generate variants
-    title_choice = random.randint(0,len(var_titles)-1)
-    num_variants = random.randint(0,len(var_names[title_choice])-1)
-    start_index = random.randint(0,len(var_names[title_choice])-1-num_variants)
+    title_choice = random.randint(0,len(v_titles)-1)
+    num_variants = random.randint(0,len(v_names[title_choice])-1)
+    start_index = random.randint(0,len(v_names[title_choice])-1-num_variants)
     base_price = random.randint(2000,30000)
     base_weight = random.randint(1,500)
 
     for k in range(num_variants+1):
         sku_prefix = p_name.upper().replace(" ","")[0:3] + p_name.upper().replace(" ","")[0:3]
         sku = f"{sku_prefix}{i}{k}"
-        var_title = var_titles[title_choice]
-        var_name = var_names[title_choice][start_index+k]
+        v_title = v_titles[title_choice]
+        v_name = v_names[title_choice][start_index+k]
         price = int(base_price + (k * round(base_price * 0.1, 0)))
         quantity = random.randint(0,12)
         weight = int(base_weight + (k * round(base_price * 0.05, 0)))
 
-        variants.append(f"INSERT INTO variants VALUES ('{sku}', '{var_title}', '{var_name}', {price}, {quantity}, {weight}, {i});")
+        variants.append(f"INSERT INTO variants VALUES ({v_free_index} ,'{sku}', '{v_title}', '{v_name}', {price}, {quantity}, {weight}, {i});")
+
+        v_indices.append(v_free_index)
+        v_free_index += 1
 
 
 #Generate fake collections
@@ -142,15 +148,12 @@ for i in range(len(products)):
     sell_prod.append(f"INSERT INTO sell_prod VALUES ({selection},{i});")
 
 
-#Generate ord_prod relationships
-indices = []
-for i in range(len(products)):
-    indices.append(i)
+#Generate ord_var relationships
 for i in range(len(orders)):
-    order_size = random.choices([1,2,3,4,5,6], weights = [10,5,3,2,1,1], k=1)
-    selection = random.choices(indices, k = order_size[0])
+    order_size = random.choices([1,2,3,4,5,6], weights = [60,20,10,6,3,1], k=1)
+    selection = random.choices(v_indices, k = order_size[0])
     for j in selection:
-        ord_prod.append(f"INSERT INTO ord_prod VALUES ({i},{j});")
+        ord_var.append(f"INSERT INTO ord_var VALUES ({i},{j});")
 
 
 #Generate ord_cust relationships
@@ -229,10 +232,10 @@ for r in sell_prod:
     print(r)
 print("""
 --
--- Data for Name: ord_prod; Type: TABLE DATA
+-- Data for Name: ord_var; Type: TABLE DATA
 --
 """)
-for r in ord_prod:
+for r in ord_var:
     print(r)
 print("""
 --

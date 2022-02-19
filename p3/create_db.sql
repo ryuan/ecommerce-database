@@ -31,14 +31,15 @@ CREATE TABLE images (
 --
 
 CREATE TABLE variants (
+    v_id integer,
     sku varchar(255),
-    var_title varchar(255) NOT NULL,
-    var_name varchar(255) NOT NULL,
+    v_title varchar(255) NOT NULL,
+    v_name varchar(255) NOT NULL,
     price integer,
     quantity integer,
     weight integer,
     p_id integer,
-    PRIMARY KEY (p_id, sku, var_title, var_name, price, quantity, weight),
+    PRIMARY KEY (v_id),
     FOREIGN KEY (p_id) REFERENCES products(p_id) ON DELETE CASCADE
 );
 
@@ -127,14 +128,14 @@ CREATE TABLE sell_prod (
 );
 
 --
--- Name: ord_prod; Type: TABLE
+-- Name: ord_var; Type: TABLE
 --
 
-CREATE TABLE ord_prod (
+CREATE TABLE ord_var (
     o_id integer NOT NULL,
-    p_id integer NOT NULL,
+    v_id integer NOT NULL,
     FOREIGN KEY (o_id) REFERENCES orders(o_id),
-    FOREIGN KEY (p_id) REFERENCES products(p_id)
+    FOREIGN KEY (v_id) REFERENCES variants(v_id)
 );
 
 --
