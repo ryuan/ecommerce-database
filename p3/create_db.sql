@@ -11,7 +11,6 @@ CREATE TABLE products (
     p_name varchar(255) NOT NULL,
     type varchar(255),
     vendor varchar(255),
-    p_description varchar(255),
     PRIMARY KEY (p_id)
 );
 
@@ -50,7 +49,6 @@ CREATE TABLE variants (
 CREATE TABLE collections (
     c_id integer,
     c_name varchar(255) NOT NULL,
-    c_description varchar(255),
     PRIMARY KEY (c_id)
 );
 

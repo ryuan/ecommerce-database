@@ -48,13 +48,13 @@ def main():
 
 
     #Generate fake products
-    for i in range(10000):
+    for i in range(8000):
         p_name = fake.ecommerce_name()
         type = fake.ecommerce_category()
         vendor = vendors[random.randint(0,len(vendors)-1)]
-        p_description = fake.paragraph(nb_sentences=5)
+        # p_description = fake.paragraph(nb_sentences=5)
         
-        master_data["products"].append(f"INSERT INTO products VALUES ({i}, '{p_name}', '{type}', '{vendor}', '{p_description}');")
+        master_data["products"].append(f"INSERT INTO products VALUES ({i}, '{p_name}', '{type}', '{vendor}');")
         
         #Generate fake images
         for j in range(random.randint(1,4)):
@@ -87,14 +87,14 @@ def main():
 
 
     #Generate fake collections
-    for i in range(1000):
+    for i in range(200):
         pre_1_choice = c_pre_1[random.randint(0, len(c_pre_1)-1)]
         pre_2_choice = c_pre_2[random.randint(0, len(c_pre_2)-1)]
         suf_choice = c_suf[random.randint(0, len(c_suf)-1)]
         c_name = pre_1_choice + " " + pre_2_choice + " " + suf_choice
-        c_description = fake.paragraph(nb_sentences=3)
+        # c_description = fake.paragraph(nb_sentences=3)
 
-        master_data["collections"].append(f"INSERT INTO collections VALUES ({i}, '{c_name}', '{c_description}');")
+        master_data["collections"].append(f"INSERT INTO collections VALUES ({i}, '{c_name}');")
 
 
     #Generate fake customers
@@ -113,7 +113,7 @@ def main():
 
 
     #Generate fake sellers
-    for i in range(1000):
+    for i in range(500):
         s_name = fake.name()
         s_email = fake.email()
         s_password = fake.sha256(raw_output=False)
@@ -126,20 +126,21 @@ def main():
 
 
     #Generate fake orders
-    for i in range(50000):
+    for i in range(40000):
         option = random.randint(0, len(ship_opts)-1)
         ship_opt = ship_opts[option]
         ship_cost = ship_costs[option]
 
         #Generate ord_cust relationships
-        customer = random.choice(customers_basics)
-        master_data["ord_cust"].append(f"INSERT INTO ord_cust VALUES ({i},{customer});")
+        customer_id = random.choice(list(customers_basics))
+        customer = customers_basics[customer_id]
+        master_data["ord_cust"].append(f"INSERT INTO ord_cust VALUES ({i},{customer_id});")
         
-        bill_add = random.choices([customer["def_bill_add"], fake.address()], weights = [90,10], k=1)
-        ship_add = random.choices([customer["def_ship_add"], fake.address()], weights = [90,10], k=1)
+        bill_add = random.choices([customer["def_bill_add"], fake.address()], weights = [90,10], k=1)[0]
+        ship_add = random.choices([customer["def_ship_add"], fake.address()], weights = [90,10], k=1)[0]
         o_date = fake.date_this_decade()
         o_time = fake.time()
-        o_phone = random.choices([customer["cust_phone"], fake.phone_number()], weights = [80,10], k=1)
+        o_phone = random.choices([customer["cust_phone"], fake.phone_number()], weights = [80,10], k=1)[0]
         o_status = order_statuses[random.randint(0, len(order_statuses)-1)]
 
         master_data["orders"].append(f"INSERT INTO orders VALUES ({i}, '{ship_opt}', {ship_cost}, '{bill_add}', '{ship_add}', '{o_date}', '{o_time}', '{o_phone}', '{o_status}');")
