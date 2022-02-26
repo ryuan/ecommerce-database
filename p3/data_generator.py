@@ -87,7 +87,7 @@ def main():
 
 
     #Generate fake collections
-    for i in range(200):
+    for i in range(100):
         pre_1_choice = c_pre_1[random.randint(0, len(c_pre_1)-1)]
         pre_2_choice = c_pre_2[random.randint(0, len(c_pre_2)-1)]
         suf_choice = c_suf[random.randint(0, len(c_suf)-1)]
@@ -126,7 +126,7 @@ def main():
 
 
     #Generate fake orders
-    for i in range(40000):
+    for i in range(20000):
         option = random.randint(0, len(ship_opts)-1)
         ship_opt = ship_opts[option]
         ship_cost = ship_costs[option]
