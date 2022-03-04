@@ -1,0 +1,20 @@
+*********** How to Run ***********
+Just cd to the p7 directory in command line, then run:
+python3 web.py
+
+That will start the server. Open a web browser and go to:
+http://localhost:8080/contacts
+
+
+*********** What to Do ***********
+You should see a list of all customer basic contacts on the ecommerce.db database.
+
+Next to each is a 'View Details' link. Clicking on the link will navigate you
+to the customer's detailed contact page, which includes his/her billing and shipping addresses.
+
+
+*********** What We Show ***********
+Per assignment instructions, this example web server shows:
+1) URL in one page that leads the user to another page
+2) URL and the page you're taken to is dynamically generated based on primary id
+3) All pages access the ecommerce.db included in the p7 directory
