@@ -7,7 +7,7 @@ INSERT INTO customers (cust_name, cust_email, cust_password, cust_phone)
 INSERT INTO customers (cust_name, cust_email, cust_password, cust_phone)
     VALUES ('Daenerys Targaryen', 'dragonlover@gmail.com', 'dt4238b993864aa36bba4d5f8084eac221dbc3e6ffb8875cd94ec002cf1d27xz', '241-765-4321')
 ;
---Query to verify that customer data for Aerys failed to insert, but data for Daenerys succeeded:
+--Query to verify that customer data for Aerys failed to insert
 SELECT
     cust_id,
     cust_name,
@@ -15,18 +15,28 @@ SELECT
 FROM
     customers
 WHERE
-    cust_name LIKE '%Targaryen%'
+    cust_name LIKE '%Aerys%' AND cust_email = 'burnthemall@gmail'
+;
+--But data for Daenerys was successfully inserted
+SELECT
+    cust_id,
+    cust_name,
+    cust_email
+FROM
+    customers
+WHERE
+    cust_name LIKE '%Daenerys%' AND cust_email = 'dragonlover@gmail.com'
 ;
 
 --Modifications to activate log_customer_contact_update trigger
---The below mod will fail due to not updating either email or phone number
+--The below mod will not log due to not updating either email or phone number
 UPDATE customers
 SET
     cust_name = 'Robert Baratheon'
 WHERE
     cust_id = 1
 ;
---The below modification will succeed
+--The below modification will be logged
 UPDATE customers
 SET
     cust_phone = '243-513-4239',
@@ -34,7 +44,7 @@ SET
 WHERE
     cust_id = 1
 ;
---Query to verify that the data for customer with id=1 updated only for phone number and email:
+--Query to verify that the log only has one entry (i.e., for the modification of phone and email):
 SELECT
     *
 FROM
@@ -44,14 +54,14 @@ WHERE
 ;
 
 --Modifications to activate log_seller_contact_update trigger
---The below mod will fail due to not updating either email or phone number
+--The below mod will not log due to not updating either email or phone number
 UPDATE sellers
 SET
     s_name = 'Stannis Baratheon'
 WHERE
     s_id = 1
 ;
---The below modification will succeed
+--The below modification will be logged
 UPDATE sellers
 SET
     bus_phone = '888-321-7654',
@@ -59,7 +69,7 @@ SET
 WHERE
     s_id = 1
 ;
---Query to verify that the data for customer with id=1 updated only for phone number and email:
+--Query to verify that the log only has one entry (i.e., for the modification of phone and email):
 SELECT
     *
 FROM
@@ -77,11 +87,19 @@ INSERT INTO products (p_name, type, vendor)
 INSERT INTO products (p_name, type, vendor)
     VALUES ('Radeon RX 6900 XT', 'Graphics Card', 'AMD')
 ;
---Query to verify that the Radeon RX 6900 XT GPU is the only graphics card on the store:
+--Query to verify that the RXXT was blocked by the trigger from being inserted:
 SELECT
     *
 FROM
     products
 WHERE
-    vendor = 'AMD'
+    p_name = 'RXXT' AND vendor = 'AMD'
+;
+--Query to verify that the Radeon RX 6900 XT GPU was added to the store:
+SELECT
+    *
+FROM
+    products
+WHERE
+    p_name = 'Radeon RX 6900 XT' AND vendor = 'AMD'
 ;
