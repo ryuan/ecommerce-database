@@ -52,9 +52,9 @@ def main():
         p_name = fake.ecommerce_name()
         type = fake.ecommerce_category()
         vendor = vendors[random.randint(0,len(vendors)-1)]
-        # p_description = fake.paragraph(nb_sentences=5)
+        p_description = fake.paragraph(nb_sentences=5)
         
-        master_data["products"].append(f"INSERT INTO products VALUES ({i}, '{p_name}', '{type}', '{vendor}');")
+        master_data["products"].append(f"INSERT INTO products VALUES ({i}, '{p_name}', '{type}', '{vendor}', '{p_description}');")
         
         #Generate fake images
         for j in range(random.randint(1,4)):
@@ -87,18 +87,18 @@ def main():
 
 
     #Generate fake collections
-    for i in range(100):
+    for i in range(50):
         pre_1_choice = c_pre_1[random.randint(0, len(c_pre_1)-1)]
         pre_2_choice = c_pre_2[random.randint(0, len(c_pre_2)-1)]
         suf_choice = c_suf[random.randint(0, len(c_suf)-1)]
         c_name = pre_1_choice + " " + pre_2_choice + " " + suf_choice
-        # c_description = fake.paragraph(nb_sentences=3)
+        c_description = fake.paragraph(nb_sentences=3)
 
-        master_data["collections"].append(f"INSERT INTO collections VALUES ({i}, '{c_name}');")
+        master_data["collections"].append(f"INSERT INTO collections VALUES ({i}, '{c_name}', '{c_description}');")
 
 
     #Generate fake customers
-    for i in range(10000):
+    for i in range(5000):
         person = fake.profile()
         cust_name = person['name']
         cust_email = person['mail']
@@ -113,7 +113,7 @@ def main():
 
 
     #Generate fake sellers
-    for i in range(500):
+    for i in range(250):
         s_name = fake.name()
         s_email = fake.email()
         s_password = fake.sha256(raw_output=False)
@@ -126,7 +126,7 @@ def main():
 
 
     #Generate fake orders
-    for i in range(20000):
+    for i in range(10000):
         option = random.randint(0, len(ship_opts)-1)
         ship_opt = ship_opts[option]
         ship_cost = ship_costs[option]
@@ -174,7 +174,7 @@ def main():
 
 
     #Write all data to populate_db.sql file
-    with open(f'populate_db_large.sql', 'w') as f:
+    with open(f'populate_db.sql', 'w') as f:
         for name, dataset in master_data.items():
             f.write("--\n")
             f.write(f"-- Data for Name: {name}; Type: TABLE DATA\n")

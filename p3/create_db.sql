@@ -11,6 +11,7 @@ CREATE TABLE products (
     p_name varchar(255) NOT NULL,
     type varchar(255),
     vendor varchar(255),
+    p_description varchar(255),
     PRIMARY KEY (p_id)
 );
 
@@ -49,6 +50,7 @@ CREATE TABLE variants (
 CREATE TABLE collections (
     c_id integer,
     c_name varchar(255) NOT NULL,
+    c_description varchar(255),
     PRIMARY KEY (c_id)
 );
 
@@ -147,3 +149,23 @@ CREATE TABLE ord_cust (
     FOREIGN KEY (cust_id) REFERENCES customers(cust_id)
 );
 
+---------------------------
+---------- LOGS -----------
+---------------------------
+
+--
+-- Name: user_logs; Type: TABLE
+--
+
+CREATE TABLE user_logs (
+    log_id integer,
+    user_id int,
+    old_phone varchar(255),
+    new_phone varchar(255),
+    old_email varchar(255),
+    new_email varchar(255),
+    user_action varchar(255),
+    user_type varchar(255),
+    created_at varchar(255),
+    PRIMARY KEY (log_id)
+);
