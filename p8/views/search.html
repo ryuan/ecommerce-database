@@ -1,0 +1,14 @@
+<a href="/">Back</a>
+
+<h1>Product Search Results</h1>
+<br/>
+<table>
+    {% for result in results %}
+        <tr>
+            <td> {{ result.p_name }} </td>
+            <td> {{ result.type }} </td>
+            <td> {{ result.vendor }} </td>
+            <td> <a href="/product/{{ result.p_id }}">View Details</a> </td>
+        </tr>
+    {% endfor %}
+</table>

@@ -1,0 +1,11 @@
+<a href="/">Back</a>
+
+{% for data in product %}
+    <h1> {{ data.p_name }} </h1>
+    <br/>
+    <table>
+    <tr><td>{{ data.type }}</td></tr>
+    <tr><td>{{ data.vendor }}</td></tr>
+    <tr><td>{{ data.p_description }}</td></tr>
+    </table>
+{% endfor %}
