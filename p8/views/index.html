@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Nozama Ecommerce Database Project - Search Results</title>
+    <title>Nozama Ecommerce Database Project - Home</title>
     <meta name="author" content="Ruoda Yuan">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
@@ -18,21 +18,18 @@
     <div class="grid-container full">
         <h1>Nozama Online Store Database</h1>
 
-        <a href="/">BACK</a>
-
         <div>
             <h3>Search Products</h3>
             <form action = "/search" method = "post">
-                Product Name*: <input name = "p_name" type="text" value="{{ queries["p_name"] }}" />
-                Type*: <input name = "type" type="text" value="{{ queries["type"] }}" />
-                Vendor*: <input name = "vendor" type="text" value="{{ queries["vendor"] }}" />
+                Product Name*: <input name = "p_name" type="text" />
+                Type*: <input name = "type" type="text" />
+                Vendor*: <input name = "vendor" type="text" />
                 <input value = "Search" type = "submit" />
             </form>
         </div>
 
         <div>
-            <h3>Product Search Results</h3>
-            <h6>(note: limit to maximum of 20 search results)</h6>
+            <h3>All Products</h3>
             <table class="center">
                 <tr>
                     <th> Product Name </th>
@@ -40,15 +37,26 @@
                     <th> Vendor </th>
                     <th> View Details </th>
                 </tr>
-                {% for result in results %}
+                {% for product in products %}
                     <tr>
-                        <td> {{ result.p_name }} </td>
-                        <td> {{ result.type }} </td>
-                        <td> {{ result.vendor }} </td>
-                        <td> <a href="/product/{{ result.p_id }}">View</a> </td>
+                        <td> {{ product.p_name }} </td>
+                        <td> {{ product.type }} </td>
+                        <td> {{ product.vendor }} </td>
+                        <td> <a href="/product/{{ product.p_id }}">View</a> </td>
                     </tr>
                 {% endfor %}
             </table>
+            
+            {% if page > 0 %}
+                {% if page == 1 %}
+                    <a href="/{{ query_string }}">PREV</a>
+                {% else %}
+                    <a href="{{ (page-1) }}{{ query_string }}">PREV</a>
+                {% endif %}
+            {% endif %}
+            {% if has_next %}
+                <a href="{{ page+1 }}{{ query_string }}">NEXT</a>
+            {% endif %}
         </div>
     </div>
 

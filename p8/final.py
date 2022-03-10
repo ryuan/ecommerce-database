@@ -1,5 +1,5 @@
 import bottle
-from bottle import request, jinja2_template as template
+from bottle import static_file, request, jinja2_template as template
 import sqlite3
 
 app = bottle.Bottle()
@@ -7,19 +7,28 @@ app = bottle.Bottle()
 con = sqlite3.connect('ecommerce.db')
 cur = con.cursor()
 
-PER_PAGE = 30
+PER_PAGE = 20
 TOTAL, = cur.execute('SELECT COUNT(*) FROM products').fetchone()
 
 
 @app.post('/search')
 def search():
+    queries = {
+        'p_name': '',
+        'type': '',
+        'vendor': ''
+        }
+
     # collect GET query data
     if request.forms.get('p_name') != None:
         p_name = request.forms.get('p_name')
+        queries["p_name"] += p_name.strip()
     if request.forms.get('type') != None:
         type = request.forms.get('type')
+        queries["type"] += type.strip()
     if request.forms.get('vendor') != None:
         vendor = request.forms.get('vendor')
+        queries["vendor"] += vendor.strip()
 
     results = cur.execute('SELECT p_id, p_name, type, vendor FROM products WHERE p_name LIKE \"%' + p_name.strip() + '%\" AND type LIKE \"%' + type.strip() + '%\" AND vendor LIKE \"%' + vendor.strip() + '%\" LIMIT 20;')
 
@@ -27,6 +36,7 @@ def search():
     results = (dict(zip(keys, result)) for result in results)
 
     parameters = {
+        'queries' : queries,
         'results' : results,
         }
 
@@ -66,7 +76,16 @@ def main(page=0):
         'query_string' : '?' + request.query_string,
         }
 
-    return template('home.html', **parameters)
+    return template('index.html', **parameters)
+
+# Static CSS files
+@app.route('/static/css/<filename:re:.*\.css>')
+def send_css(filename):
+    return static_file(filename, root='static/css')
+
+@app.route('/static/images/<filename:re:.*\.ico>')
+def send_favicon(filename):
+    return static_file(filename, root='static/images')
 
 if __name__ == '__main__':
     app.run(host='localhost', port=8080, debug = True)
