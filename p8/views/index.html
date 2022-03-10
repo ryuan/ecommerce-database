@@ -29,13 +29,14 @@
         </div>
 
         <div>
-            <h3>All Products</h3>
+            <h3>All Products ({{ total_products }})</h3>
             <table class="center">
                 <tr>
                     <th> Product Name </th>
                     <th> Type </th>
                     <th> Vendor </th>
-                    <th> View Details </th>
+                    <th> View Product </th>
+                    <th> Delete Product </th>
                 </tr>
                 {% for product in products %}
                     <tr>
@@ -43,6 +44,7 @@
                         <td> {{ product.type }} </td>
                         <td> {{ product.vendor }} </td>
                         <td> <a href="/product/{{ product.p_id }}">View</a> </td>
+                        <td> <a href="/delete?p_id={{ product.p_id }}">Delete</a> </td>
                     </tr>
                 {% endfor %}
             </table>

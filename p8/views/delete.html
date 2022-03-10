@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Nozama Ecommerce Database Project - View {{ p_name }}</title>
+    <title>Nozama Ecommerce Database Project - Delete {{ p_name }}</title>
     <meta name="author" content="Ruoda Yuan">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
@@ -20,23 +20,12 @@
         
         <a href="/">BACK</a>
 
-        {% for data in product %}
-            <h2>{{ data.p_name }}</h2>
-            <table>
-                <tr>
-                    <td>Type:</td>
-                    <td>{{ data.type }}</td>
-                </tr>
-                <tr>
-                    <td>Vendor:</td>
-                    <td>{{ data.vendor }}</td>
-                </tr>
-                <tr>
-                    <td>Description:</td>
-                    <td>{{ data.p_description }}</td>
-                </tr>
-            </table>
-        {% endfor %}
+        <div>
+            <p>{{ p_name }} was deleted from the database</p>
+            <form action="/">
+                <input type="submit" value="Return Home" />
+            </form>
+        </div>
     </div>
 
 </body>
