@@ -2,6 +2,8 @@ import bottle
 from bottle import static_file, request, jinja2_template as template
 import sqlite3
 
+from numpy import var
+
 app = bottle.Bottle()
 
 con = sqlite3.connect('ecommerce.db')
@@ -60,8 +62,36 @@ def search():
     return template("search.html", **parameters)
 
 
+@app.route('/product/<p_id>/variants')
+def variants(p_id):
+    # fetch just the name of the p_id product for dynamic reference
+    product = cur.execute('SELECT p_name FROM products WHERE p_id =' + p_id + ';')
+    p_name = product.fetchone()[0]
+
+    # fetch the db data for p_id's variants
+    variants = cur.execute('SELECT * FROM variants WHERE p_id =' + p_id + ';')
+
+    keys = ('v_id', 'sku', 'v_title', 'v_name', 'price', 'quantity', 'weight')
+    variants = (dict(zip(keys, variant)) for variant in variants)
+
+    fixed_variants = []
+    for variant in variants:
+        variant['price'] = variant['price'] * 0.01
+        variant['weight'] = int(variant['weight'] * 0.0625)
+        fixed_variants.append(variant)
+
+    parameters = {
+        'p_id' : p_id,
+        'p_name' : p_name,
+        'variants' : fixed_variants
+        }
+
+    return template("variants.html", **parameters)
+
+
+
 @app.route('/product/<p_id>')
-def detail(p_id):
+def product(p_id):
     # fetch just the name of the p_id product for meta tag title
     product = cur.execute('SELECT p_name FROM products WHERE p_id =' + p_id + ';')
     p_name = product.fetchone()[0]
@@ -82,7 +112,7 @@ def detail(p_id):
 
 @app.route('/')
 @app.route('/<page:int>')
-def main(page=0):
+def index(page=0):
     # number of records per page
     per = int(request.query.per or PER_PAGE)
     start, end = page*per, (page+1)*per

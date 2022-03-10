@@ -35,16 +35,18 @@
                     <th> Product Name </th>
                     <th> Type </th>
                     <th> Vendor </th>
-                    <th> View Product </th>
-                    <th> Delete Product </th>
+                    <th> Edit </th>
+                    <th> Delete </th>
+                    <th> Variants </th>
                 </tr>
                 {% for product in products %}
                     <tr>
-                        <td> {{ product.p_name }} </td>
+                        <td> <a href="/product/{{ product.p_id }}">{{ product.p_name }}</a> </td>
                         <td> {{ product.type }} </td>
                         <td> {{ product.vendor }} </td>
-                        <td> <a href="/product/{{ product.p_id }}">View</a> </td>
+                        <td> <a href="/product/{{ product.p_id }}">Edit</a> </td>
                         <td> <a href="/delete?p_id={{ product.p_id }}">Delete</a> </td>
+                        <td> <a href="/product/{{ product.p_id }}/variants">View</a> </td>
                     </tr>
                 {% endfor %}
             </table>

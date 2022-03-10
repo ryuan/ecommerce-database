@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Nozama Ecommerce Database Project - {{ p_name }}'s Variants</title>
+    <meta name="author" content="Ruoda Yuan">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/static/css/normalize.css">
+    <link rel="stylesheet" href="/static/css/barebones.css">
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
+</head>
+
+
+<body>
+
+    <div class="grid-container full">
+        <h1>Nozama Online Store Database</h1>
+        
+        <a href="/product/{{ p_id }}">← Back to {{ p_name }}</a>
+
+        <h2>Variants of {{ p_name }}</h2>
+
+        {% for variant in variants %}
+            <table>
+                <tr>
+                    <th>Variant Type:</th>
+                    <td>{{ variant.v_title }}</td>
+                    <th>SKU:</th>
+                    <td>{{ variant.sku }}</td>
+                </tr>
+                <tr>
+                    <th>Variant Name:</th>
+                    <td>{{ variant.v_name }}</td>
+                    <th>Price (US$):</th>
+                    <td>${{ variant.price }}</td>
+                </tr>
+                <tr>
+                    <td class = "borderless"></td>
+                    <td class = "borderless"></td>
+                    <th>Stock:</th>
+                    <td>{{ variant.quantity }}</td>
+                </tr>
+                <tr>
+                    <td class = "borderless"></td>
+                    <td class = "borderless"></td>
+                    <th>Weight (lbs):</th>
+                    <td>{{ variant.weight }}</td>
+                </tr>
+            </table>
+        {% endfor %}
+    </div>
+
+</body>
+</html>
