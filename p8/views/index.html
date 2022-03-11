@@ -19,7 +19,7 @@
         <h1>Nozama Online Store Database</h1>
 
         <div>
-            <h3>Search Products</h3>
+            <h3>Search Products &#128269;</h3>
             <form action = "/search" method = "post">
                 Product Name*: <input name = "p_name" type="text" />
                 Type*: <input name = "type" type="text" />
@@ -65,9 +65,9 @@
                         <td> <a href="/product/{{ product.p_id }}">{{ product.p_name }}</a> </td>
                         <td> {{ product.type }} </td>
                         <td> {{ product.vendor }} </td>
-                        <td> <a href="/delete?p_id={{ product.p_id }}">Delete</a> </td>
-                        <td> <a href="/product/{{ product.p_id }}/variants">View/Edit</a> </td>
-                        <td> <a href="/product/{{ product.p_id }}/variants/create">Add New</a> </td>
+                        <td> <a href="/delete?p_id={{ product.p_id }}" class="symbol">&#10060;</a> </td>
+                        <td> <a href="/product/{{ product.p_id }}/variants" class="symbol">&#128065;</a> </td>
+                        <td> <a href="/product/{{ product.p_id }}/variants/create" class="symbol">&#10133;</a> </td>
                     </tr>
                 {% endfor %}
             </table>

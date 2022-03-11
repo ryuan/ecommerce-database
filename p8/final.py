@@ -1,5 +1,6 @@
+from urllib import response
 import bottle
-from bottle import static_file, request, jinja2_template as template
+from bottle import static_file, HTTP_CODES, request, jinja2_template as template
 import sqlite3
 from inflection import parameterize
 
@@ -11,7 +12,6 @@ con = sqlite3.connect('ecommerce.db')
 cur = con.cursor()
 
 PER_PAGE = 20
-
 
 
 @app.route('/product/<p_id>/variants/create')
@@ -299,6 +299,40 @@ def send_css(filename):
 @app.route('/static/images/<filename:re:.*\.ico>')
 def send_favicon(filename):
     return static_file(filename, root='static/images')
+
+
+# Error handling
+@app.error(400)
+@app.error(403)
+@app.error(404)
+@app.error(405)
+@app.error(406)
+@app.error(407)
+@app.error(408)
+@app.error(413)
+@app.error(414)
+@app.error(415)
+@app.error(416)
+@app.error(417)
+@app.error(418)
+@app.error(422)
+@app.error(423)
+@app.error(428)
+@app.error(429)
+@app.error(431)
+@app.error(500)
+@app.error(501)
+@app.error(502)
+@app.error(503)
+@app.error(504)
+@app.error(511)
+def error_handler(error):
+
+    parameters = {
+        'error' : error
+        }
+    return template("error_handler.html", parameters)
+
 
 
 if __name__ == '__main__':

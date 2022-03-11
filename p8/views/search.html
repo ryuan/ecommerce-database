@@ -21,7 +21,7 @@
         <a href="/">← Home</a>
 
         <div>
-            <h3>Search Products</h3>
+            <h3>Search Products &#128269;</h3>
             <form action="/search" method ="post">
                 Product Name*: <input name="p_name" type="text" value="{{ queries["p_name"] }}" />
                 Type*: <input name="type" type="text" value="{{ queries["type"] }}" />
@@ -47,9 +47,9 @@
                         <td> <a href="/product/{{ result.p_id }}">{{ result.p_name }}</a> </td>
                         <td> {{ result.type }} </td>
                         <td> {{ result.vendor }} </td>
-                        <td> <a href="/delete?p_id={{ result.p_id }}">Delete</a> </td>
-                        <td> <a href="/product/{{ result.p_id }}/variants">View/Edit</a> </td>
-                        <td> <a href="/product/{{ result.p_id }}/variants/create">Add New</a> </td>
+                        <td> <a href="/delete?p_id={{ result.p_id }}" class="symbol">&#10060;</a> </td>
+                        <td> <a href="/product/{{ result.p_id }}/variants" class="symbol">&#128065;</a> </td>
+                        <td> <a href="/product/{{ result.p_id }}/variants/create" class="symbol">&#10133;</a> </td>
                     </tr>
                 {% endfor %}
             </table>
