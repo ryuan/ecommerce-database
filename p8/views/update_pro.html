@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Nozama Ecommerce Database Project - Updated {{ p_name }}</title>
+    <meta name="author" content="Ruoda Yuan">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/static/css/normalize.css">
+    <link rel="stylesheet" href="/static/css/barebones.css">
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
+</head>
+
+
+<body>
+
+    <div class="grid-container full">
+        <h1>Nozama Online Store Database</h1>
+        
+        <div><a href="/">← Home</a> / <a href="/product/{{ p_id }}">{{ p_name }}</a></div>
+
+        <h2>Updated {{ p_name }}</h2>
+
+        <form action="/product/{{ p_id }}">
+            <input type="submit" value="Return to {{ p_name }}" />
+        </form>
+
+        <h4>Result of updated product:</h4>
+
+        <table>
+            <tr>
+                <th>Name:</th>
+                <td>{{ p_name }}</td>
+            </tr>
+            <tr>
+                <th>Type:</th>
+                <td>{{ type }}</td>
+            </tr>
+            <tr>
+                <th>Vendor:</th>
+                <td>{{ vendor }}</td>
+            </tr>
+            <tr>
+                <th>Description:</th>
+                <td>{{ p_description }}</td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>

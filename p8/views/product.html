@@ -21,20 +21,18 @@
         <a href="/">← Home</a>
 
         <h2>{{ p_name }}</h2>
-        <table>
-            <tr>
-                <th>Type:</th>
-                <td>{{ type }}</td>
-            </tr>
-            <tr>
-                <th>Vendor:</th>
-                <td>{{ vendor }}</td>
-            </tr>
-            <tr>
-                <th>Description:</th>
-                <td>{{ p_description }}</td>
-            </tr>
-        </table>
+        <a href="/delete?p_id={{ p_id }}">Delete Product</a>
+
+        <form action = "/product/{{ p_id }}/update" method="post" id="edit_product" style="margin-bottom: 0;">
+            <div class="container space-between">
+                <span>Name:&nbsp;&nbsp;<input name="p_name" type="text" value="{{ p_name }}"/></span>
+                <span>Type:&nbsp;&nbsp;<input name="type" type="text" value="{{ type }}"/></span>
+                <span>Vendor:&nbsp;&nbsp;<input name="vendor" type="text" value="{{ vendor }}"/></span>
+                <span><input value = "Update" type = "submit" /></span>
+            </div>
+        </form>
+
+        <textarea name="p_description" form="edit_product">{{ p_description }}</textarea>
 
         <h4 style="margin-bottom: 0;">{{p_name}} Variants</h4>
         <div>

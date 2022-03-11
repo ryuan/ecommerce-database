@@ -13,6 +13,22 @@ cur = con.cursor()
 PER_PAGE = 20
 
 
+
+@app.route('/product/<p_id>/variants/create')
+@app.route('/product/<p_id>/variants/create/')
+def create_var(p_id):
+    # fetch just the name of the p_id product for dynamic reference
+    product = cur.execute('SELECT p_name FROM products WHERE p_id =' + p_id + ';')
+    p_name = product.fetchone()[0]
+
+    parameters = {
+        'p_id' : p_id,
+        'p_name' : p_name
+        }
+
+    return template("create_var.html", parameters)
+
+
 @app.post('/product/<p_id>/variants/insert')
 @app.post('/product/<p_id>/variants/insert/')
 def insert_var(p_id):
@@ -43,73 +59,6 @@ def insert_var(p_id):
         }
 
     return template("insert_var.html", parameters)
-
-
-@app.route('/delete')
-@app.route('/delete/')
-def delete():
-    p_id = request.query.get('p_id')
-
-    # fetch just the name of the p_id product to display confirmation in view
-    product = cur.execute('SELECT p_name FROM products WHERE p_id =' + p_id + ';')
-    p_name = product.fetchone()[0]
-
-    cur.execute(f'DELETE FROM products WHERE p_id = { p_id };')
-    con.commit()
-
-    parameters = {
-        'p_name' : p_name,
-        }
-
-    return template("delete.html", parameters)
-
-
-@app.post('/search')
-@app.post('/search/')
-def search():
-    queries = {
-        'p_name': '',
-        'type': '',
-        'vendor': ''
-        }
-
-    # collect GET query data
-    if request.forms.get('p_name') != None:
-        p_name = request.forms.get('p_name')
-        queries["p_name"] += p_name.strip()
-    if request.forms.get('type') != None:
-        type = request.forms.get('type')
-        queries["type"] += type.strip()
-    if request.forms.get('vendor') != None:
-        vendor = request.forms.get('vendor')
-        queries["vendor"] += vendor.strip()
-
-    results = cur.execute('SELECT p_id, p_name, type, vendor FROM products WHERE p_name LIKE "%' + p_name.strip() + '%" AND type LIKE \"%' + type.strip() + '%\" AND vendor LIKE \"%' + vendor.strip() + '%\" LIMIT 20;')
-
-    keys = ('p_id', 'p_name', 'type', 'vendor')
-    results = (dict(zip(keys, result)) for result in results)
-
-    parameters = {
-        'queries' : queries,
-        'results' : results,
-        }
-
-    return template("search.html", **parameters)
-
-
-@app.route('/product/<p_id>/variants/create')
-@app.route('/product/<p_id>/variants/create/')
-def create_var(p_id):
-    # fetch just the name of the p_id product for dynamic reference
-    product = cur.execute('SELECT p_name FROM products WHERE p_id =' + p_id + ';')
-    p_name = product.fetchone()[0]
-
-    parameters = {
-        'p_id' : p_id,
-        'p_name' : p_name
-        }
-
-    return template("create_var.html", parameters)
 
 
 @app.post('/product/<p_id>/variants/update')
@@ -176,6 +125,47 @@ def variants(p_id):
     return template("variants.html", **parameters)
 
 
+@app.post('/product/<p_id>/update')
+@app.post('/product/<p_id>/update/')
+def update_pro(p_id):
+    p_name = request.forms.get('p_name')
+    type = request.forms.get('type')
+    vendor = request.forms.get('vendor')
+    p_description = request.forms.get('p_description')
+
+    # update variant given v_id
+    cur.execute(f'UPDATE products SET p_name = "{ p_name }", type = "{ type }", vendor = "{ vendor }", p_description = "{ p_description }" WHERE p_id = { p_id };')
+    con.commit()
+
+    parameters = {
+        'p_id' : p_id,
+        'p_name' : p_name,
+        'type' : type,
+        'vendor' : vendor,
+        'p_description' : p_description
+        }
+
+    return template("update_pro.html", parameters)
+
+
+@app.route('/delete')
+@app.route('/delete/')
+def delete():
+    p_id = request.query.get('p_id')
+
+    # fetch just the name of the p_id product to display confirmation in view
+    product = cur.execute('SELECT p_name FROM products WHERE p_id =' + p_id + ';')
+    p_name = product.fetchone()[0]
+
+    cur.execute(f'DELETE FROM products WHERE p_id = { p_id };')
+    con.commit()
+
+    parameters = {
+        'p_name' : p_name,
+        }
+
+    return template("delete.html", parameters)
+
 
 @app.route('/product/<p_id>')
 @app.route('/product/<p_id>/')
@@ -209,6 +199,39 @@ def product(p_id):
         }
 
     return template("product.html", **parameters)
+
+
+@app.post('/search')
+@app.post('/search/')
+def search():
+    queries = {
+        'p_name': '',
+        'type': '',
+        'vendor': ''
+        }
+
+    # collect GET query data
+    if request.forms.get('p_name') != None:
+        p_name = request.forms.get('p_name')
+        queries["p_name"] += p_name.strip()
+    if request.forms.get('type') != None:
+        type = request.forms.get('type')
+        queries["type"] += type.strip()
+    if request.forms.get('vendor') != None:
+        vendor = request.forms.get('vendor')
+        queries["vendor"] += vendor.strip()
+
+    results = cur.execute('SELECT p_id, p_name, type, vendor FROM products WHERE p_name LIKE "%' + p_name.strip() + '%" AND type LIKE \"%' + type.strip() + '%\" AND vendor LIKE \"%' + vendor.strip() + '%\" LIMIT 20;')
+
+    keys = ('p_id', 'p_name', 'type', 'vendor')
+    results = (dict(zip(keys, result)) for result in results)
+
+    parameters = {
+        'queries' : queries,
+        'results' : results,
+        }
+
+    return template("search.html", **parameters)
 
 
 @app.route('/')

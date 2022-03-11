@@ -427,6 +427,22 @@ ol,
 form {
   margin-bottom: 2.5rem; }
 
+.container {
+  display: flex;
+}
+.container.space-around {
+  justify-content: space-around;
+}
+.container.space-around:after {  
+  content: none;
+}
+.container.space-between {  
+  justify-content: space-between;
+}
+.container.space-between:after {  
+  content: none;
+}
+
 
 /* Utilities
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
