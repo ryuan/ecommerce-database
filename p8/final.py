@@ -15,7 +15,7 @@ PER_PAGE = 20
 
 @app.post('/product/<p_id>/variants/insert')
 @app.post('/product/<p_id>/variants/insert/')
-def insert(p_id):
+def insert_var(p_id):
     # fetch just the name of the p_id product to display confirmation in view
     product = cur.execute('SELECT p_name FROM products WHERE p_id =' + p_id + ';')
     p_name = product.fetchone()[0]
@@ -42,7 +42,7 @@ def insert(p_id):
         'weight' : weight
         }
 
-    return template("insert.html", parameters)
+    return template("insert_var.html", parameters)
 
 
 @app.route('/delete')
@@ -99,7 +99,7 @@ def search():
 
 @app.route('/product/<p_id>/variants/create')
 @app.route('/product/<p_id>/variants/create/')
-def create(p_id):
+def create_var(p_id):
     # fetch just the name of the p_id product for dynamic reference
     product = cur.execute('SELECT p_name FROM products WHERE p_id =' + p_id + ';')
     p_name = product.fetchone()[0]
@@ -109,12 +109,12 @@ def create(p_id):
         'p_name' : p_name
         }
 
-    return template("create.html", parameters)
+    return template("create_var.html", parameters)
 
 
 @app.post('/product/<p_id>/variants/update')
 @app.post('/product/<p_id>/variants/update/')
-def update(p_id):
+def update_var(p_id):
     # fetch just the name of the p_id product to display confirmation in view
     product = cur.execute('SELECT p_name FROM products WHERE p_id =' + p_id + ';')
     p_name = product.fetchone()[0]
@@ -145,7 +145,7 @@ def update(p_id):
         'weight' : weight
         }
 
-    return template("update.html", parameters)
+    return template("update_var.html", parameters)
 
 
 @app.route('/product/<p_id>/variants')

@@ -38,17 +38,15 @@
                     <th> Product Name </th>
                     <th> Type </th>
                     <th> Vendor </th>
-                    <th> Details </th>
                     <th> Delete </th>
                     <th> Variants </th>
                     <th> New Variant </th>
                 </tr>
                 {% for result in results %}
                     <tr>
-                        <td> {{ result.p_name }} </td>
+                        <td> <a href="/product/{{ result.p_id }}">{{ result.p_name }}</a> </td>
                         <td> {{ result.type }} </td>
                         <td> {{ result.vendor }} </td>
-                        <td> <a href="/product/{{ result.p_id }}">View/Edit</a> </td>
                         <td> <a href="/delete?p_id={{ result.p_id }}">Delete</a> </td>
                         <td> <a href="/product/{{ result.p_id }}/variants">View/Edit</a> </td>
                         <td> <a href="/product/{{ result.p_id }}/variants/create">Add New</a> </td>
