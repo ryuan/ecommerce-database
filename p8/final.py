@@ -112,6 +112,42 @@ def create(p_id):
     return template("create.html", parameters)
 
 
+@app.post('/product/<p_id>/variants/update')
+@app.post('/product/<p_id>/variants/update/')
+def update(p_id):
+    # fetch just the name of the p_id product to display confirmation in view
+    product = cur.execute('SELECT p_name FROM products WHERE p_id =' + p_id + ';')
+    p_name = product.fetchone()[0]
+
+    v_id = request.forms.get('v_id')
+    v_title = request.forms.get('v_title')
+    v_name = request.forms.get('v_name')
+    sku = request.forms.get('sku')
+    price = int(float(request.forms.get('price')) * 100)
+    quantity = int(request.forms.get('quantity'))
+    weight = int(float(request.forms.get('weight')) / 0.0625)
+
+    # update variant given v_id
+    cur.execute(f'UPDATE variants SET v_title = "{ v_title }", v_name = "{ v_name }", sku = "{ sku }", price = { price }, quantity = { quantity }, weight = { weight } WHERE v_id = { v_id };')
+    con.commit()
+
+    price = format(price * 0.01, ".2f")
+    weight = format(weight * 0.0625, ".2f")
+
+    parameters = {
+        'p_id' : p_id,
+        'p_name' : p_name,
+        'v_title' : v_title,
+        'v_name' : v_name,
+        'sku' : sku,
+        'price' : price,
+        'quantity' : quantity,
+        'weight' : weight
+        }
+
+    return template("update.html", parameters)
+
+
 @app.route('/product/<p_id>/variants')
 @app.route('/product/<p_id>/variants/')
 def variants(p_id):
@@ -128,7 +164,7 @@ def variants(p_id):
     fixed_variants = []
     for variant in variants:
         variant['price'] = format(variant['price'] * 0.01, ".2f")
-        variant['weight'] = int(variant['weight'] * 0.0625)
+        variant['weight'] = format(variant['weight'] * 0.0625, ".2f")
         fixed_variants.append(variant)
 
     parameters = {

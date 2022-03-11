@@ -24,34 +24,38 @@
 
         <a href="/product/{{ p_id }}/variants/create">Add New Variant</a>
 
+        <form action = "/product/{{ p_id }}/variants/update" method="post">
         {% for variant in variants %}
-            <table>
+            <table class="center">
                 <tr>
                     <th>Variant Type:</th>
-                    <td>{{ variant.v_title }}</td>
+                    <td><input name="v_title" type="text" value="{{ variant.v_title }}"/></td>
                     <th>SKU:</th>
-                    <td>{{ variant.sku }}</td>
+                    <td><input name="sku" type="text" value="{{ variant.sku }}"/></td>
                 </tr>
                 <tr>
                     <th>Variant Name:</th>
-                    <td>{{ variant.v_name }}</td>
+                    <td><input name = "v_name" type="text" value="{{ variant.v_name }}" /></td>
                     <th>Price (US$):</th>
-                    <td>{{ variant.price }}</td>
+                    <td><input name="price" type="number" step="0.01" min="0" value={{ variant.price }} /></td>
                 </tr>
                 <tr>
-                    <td class="borderless"></td>
-                    <td class="borderless"></td>
+                    <td class = "borderless"></td>
+                    <td class = "borderless"></td>
                     <th>Stock:</th>
-                    <td>{{ variant.quantity }}</td>
+                    <td><input name="quantity" type="number" step="1" min="0" value={{ variant.quantity }} /></td>
                 </tr>
                 <tr>
-                    <td class="borderless"></td>
-                    <td class="borderless"></td>
+                    <td class = "borderless"></td>
+                    <td class = "borderless"></td>
                     <th>Weight (lbs):</th>
-                    <td>{{ variant.weight }}</td>
+                    <td><input name="weight" type="number" step="0.01" min="0" value={{ variant.weight }} /></td>
                 </tr>
             </table>
+            <input name="v_id" type="hidden" value="{{ variant.v_id }}">
+            <p><input value = "Update" type = "submit" /></p>
         {% endfor %}
+        </form>
     </div>
 
 </body>
