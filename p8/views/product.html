@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Nozama Ecommerce Database Project - View {{ p_name }}</title>
+    <title>Nozama Ecommerce Database Project - {{ p_name }}</title>
     <meta name="author" content="Ruoda Yuan">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
@@ -18,25 +18,47 @@
     <div class="grid-container full">
         <h1>Nozama Online Store Database</h1>
         
-        <a href="/">← Back to Home</a>
+        <a href="/">← Home</a>
 
-        {% for data in product %}
-            <h2>{{ data.p_name }}</h2>
-            <table>
+        <h2>{{ p_name }}</h2>
+        <table>
+            <tr>
+                <th>Type:</th>
+                <td>{{ type }}</td>
+            </tr>
+            <tr>
+                <th>Vendor:</th>
+                <td>{{ vendor }}</td>
+            </tr>
+            <tr>
+                <th>Description:</th>
+                <td>{{ p_description }}</td>
+            </tr>
+        </table>
+
+        <h4 style="margin-bottom: 0;">{{p_name}} Variants</h4>
+        <div>
+            <a href="/product/{{ p_id }}/variants/create">Add New</a>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="/product/{{ p_id }}/variants">Edit Variants</a>
+        </div>
+
+        <table>
+            <tr>
+                <th>Variant Type:</th>
+                <th>Variant Name:</th>
+                <th>Price (US$):</th>
+                <th>Stock:</th>
+            </tr>
+            {% for variant in variants %}
                 <tr>
-                    <td>Type:</td>
-                    <td>{{ data.type }}</td>
+                    <td>{{ variant.v_title }}</td>
+                    <td>{{ variant.v_name }}</td>
+                    <td>{{ variant.price }}</td>
+                    <td>{{ variant.quantity }}</td>
                 </tr>
-                <tr>
-                    <td>Vendor:</td>
-                    <td>{{ data.vendor }}</td>
-                </tr>
-                <tr>
-                    <td>Description:</td>
-                    <td>{{ data.p_description }}</td>
-                </tr>
-            </table>
-        {% endfor %}
+            {% endfor %}
+        </table>
     </div>
 
 </body>

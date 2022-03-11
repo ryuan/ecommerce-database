@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Nozama Ecommerce Database Project - {{ p_name }}'s Variants</title>
+    <title>Nozama Ecommerce Database Project - {{ p_name }} Variants</title>
     <meta name="author" content="Ruoda Yuan">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
@@ -18,9 +18,11 @@
     <div class="grid-container full">
         <h1>Nozama Online Store Database</h1>
         
-        <a href="/product/{{ p_id }}">← Back to {{ p_name }}</a>
+        <div><a href="/">← Home</a> / <a href="/product/{{ p_id }}">{{ p_name }}</a></div>
 
         <h2>Variants of {{ p_name }}</h2>
+
+        <a href="/product/{{ p_id }}/variants/create">Add New Variant</a>
 
         {% for variant in variants %}
             <table>
@@ -34,17 +36,17 @@
                     <th>Variant Name:</th>
                     <td>{{ variant.v_name }}</td>
                     <th>Price (US$):</th>
-                    <td>${{ variant.price }}</td>
+                    <td>{{ variant.price }}</td>
                 </tr>
                 <tr>
-                    <td class = "borderless"></td>
-                    <td class = "borderless"></td>
+                    <td class="borderless"></td>
+                    <td class="borderless"></td>
                     <th>Stock:</th>
                     <td>{{ variant.quantity }}</td>
                 </tr>
                 <tr>
-                    <td class = "borderless"></td>
-                    <td class = "borderless"></td>
+                    <td class="borderless"></td>
+                    <td class="borderless"></td>
                     <th>Weight (lbs):</th>
                     <td>{{ variant.weight }}</td>
                 </tr>

@@ -72,10 +72,10 @@ def main():
         base_weight = random.randint(1,500)
 
         for k in range(num_variants+1):
-            sku_prefix = p_name.upper().replace(" ","")[0:3] + p_name.upper().replace(" ","")[0:3]
-            sku = f"{sku_prefix}{i}{k}"
             v_title = v_titles[title_choice]
             v_name = v_names[title_choice][start_index+k]
+            sku_prefix = p_name.upper().replace(" ","")[0:3] + type.upper().replace(" ","")[0:3] + v_name.upper().replace(" ","")[0:3]
+            sku = f"{sku_prefix}{i}{k}"
             price = int(base_price + (k * round(base_price * 0.1, 0)))
             quantity = random.randint(0,12)
             weight = int(base_weight + (k * round(base_price * 0.05, 0)))

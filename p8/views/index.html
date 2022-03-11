@@ -30,23 +30,42 @@
 
         <div>
             <h3>All Products ({{ total_products }})</h3>
+
+            {% if page > 0 %}
+                {% if page == 1 %}
+                    <a href="/{{ query_string }}">PREV</a>
+                {% else %}
+                    <a href="{{ (page-1) }}{{ query_string }}">PREV</a>
+                {% endif %}
+            {% endif %}
+            {% if page > 0 %}
+                {% if has_next %}
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                {% endif %}    
+            {% endif %}
+            {% if has_next %}
+                <a href="{{ page+1 }}{{ query_string }}">NEXT</a>
+            {% endif %}
+
             <table class="center">
                 <tr>
                     <th> Product Name </th>
                     <th> Type </th>
                     <th> Vendor </th>
-                    <th> Edit </th>
+                    <th> Details </th>
                     <th> Delete </th>
                     <th> Variants </th>
+                    <th> New Variant </th>
                 </tr>
                 {% for product in products %}
                     <tr>
-                        <td> <a href="/product/{{ product.p_id }}">{{ product.p_name }}</a> </td>
+                        <td> {{ product.p_name }} </td>
                         <td> {{ product.type }} </td>
                         <td> {{ product.vendor }} </td>
-                        <td> <a href="/product/{{ product.p_id }}">Edit</a> </td>
+                        <td> <a href="/product/{{ product.p_id }}">View/Edit</a> </td>
                         <td> <a href="/delete?p_id={{ product.p_id }}">Delete</a> </td>
-                        <td> <a href="/product/{{ product.p_id }}/variants">View</a> </td>
+                        <td> <a href="/product/{{ product.p_id }}/variants">View/Edit</a> </td>
+                        <td> <a href="/product/{{ product.p_id }}/variants/create">Add New</a> </td>
                     </tr>
                 {% endfor %}
             </table>
@@ -57,6 +76,11 @@
                 {% else %}
                     <a href="{{ (page-1) }}{{ query_string }}">PREV</a>
                 {% endif %}
+            {% endif %}
+            {% if page > 0 %}
+                {% if has_next %}
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                {% endif %}    
             {% endif %}
             {% if has_next %}
                 <a href="{{ page+1 }}{{ query_string }}">NEXT</a>

@@ -1,6 +1,7 @@
 import bottle
 from bottle import static_file, request, jinja2_template as template
 import sqlite3
+from inflection import parameterize
 
 from numpy import var
 
@@ -12,7 +13,40 @@ cur = con.cursor()
 PER_PAGE = 20
 
 
+@app.post('/product/<p_id>/variants/insert')
+@app.post('/product/<p_id>/variants/insert/')
+def insert(p_id):
+    # fetch just the name of the p_id product to display confirmation in view
+    product = cur.execute('SELECT p_name FROM products WHERE p_id =' + p_id + ';')
+    p_name = product.fetchone()[0]
+
+    v_title = request.forms.get('v_title')
+    v_name = request.forms.get('v_name')
+    sku = request.forms.get('sku')
+    price = int(float(request.forms.get('price')) * 100)
+    quantity = int(request.forms.get('quantity'))
+    weight = int(float(request.forms.get('weight')) / 0.0625)
+
+    # insert new variant as tuple into variants table
+    cur.execute(f'INSERT INTO variants (v_title, v_name, sku, price, quantity, weight, p_id) VALUES ("{v_title}", "{v_name}", "{sku}", {price}, {quantity}, {weight}, {p_id});')
+    con.commit()
+
+    parameters = {
+        'p_id' : p_id,
+        'p_name' : p_name,
+        'v_title' : v_title,
+        'v_name' : v_name,
+        'sku' : sku,
+        'price' : price,
+        'quantity' : quantity,
+        'weight' : weight
+        }
+
+    return template("insert.html", parameters)
+
+
 @app.route('/delete')
+@app.route('/delete/')
 def delete():
     p_id = request.query.get('p_id')
 
@@ -31,6 +65,7 @@ def delete():
 
 
 @app.post('/search')
+@app.post('/search/')
 def search():
     queries = {
         'p_name': '',
@@ -49,7 +84,7 @@ def search():
         vendor = request.forms.get('vendor')
         queries["vendor"] += vendor.strip()
 
-    results = cur.execute('SELECT p_id, p_name, type, vendor FROM products WHERE p_name LIKE \"%' + p_name.strip() + '%\" AND type LIKE \"%' + type.strip() + '%\" AND vendor LIKE \"%' + vendor.strip() + '%\" LIMIT 20;')
+    results = cur.execute('SELECT p_id, p_name, type, vendor FROM products WHERE p_name LIKE "%' + p_name.strip() + '%" AND type LIKE \"%' + type.strip() + '%\" AND vendor LIKE \"%' + vendor.strip() + '%\" LIMIT 20;')
 
     keys = ('p_id', 'p_name', 'type', 'vendor')
     results = (dict(zip(keys, result)) for result in results)
@@ -62,7 +97,23 @@ def search():
     return template("search.html", **parameters)
 
 
+@app.route('/product/<p_id>/variants/create')
+@app.route('/product/<p_id>/variants/create/')
+def create(p_id):
+    # fetch just the name of the p_id product for dynamic reference
+    product = cur.execute('SELECT p_name FROM products WHERE p_id =' + p_id + ';')
+    p_name = product.fetchone()[0]
+
+    parameters = {
+        'p_id' : p_id,
+        'p_name' : p_name
+        }
+
+    return template("create.html", parameters)
+
+
 @app.route('/product/<p_id>/variants')
+@app.route('/product/<p_id>/variants/')
 def variants(p_id):
     # fetch just the name of the p_id product for dynamic reference
     product = cur.execute('SELECT p_name FROM products WHERE p_id =' + p_id + ';')
@@ -76,7 +127,7 @@ def variants(p_id):
 
     fixed_variants = []
     for variant in variants:
-        variant['price'] = variant['price'] * 0.01
+        variant['price'] = format(variant['price'] * 0.01, ".2f")
         variant['weight'] = int(variant['weight'] * 0.0625)
         fixed_variants.append(variant)
 
@@ -91,20 +142,34 @@ def variants(p_id):
 
 
 @app.route('/product/<p_id>')
+@app.route('/product/<p_id>/')
 def product(p_id):
-    # fetch just the name of the p_id product for meta tag title
-    product = cur.execute('SELECT p_name FROM products WHERE p_id =' + p_id + ';')
-    p_name = product.fetchone()[0]
+    # fetch p_id's product data from the db
+    product = cur.execute('SELECT p_name, type, vendor, p_description FROM products WHERE p_id =' + p_id + ';')
+    product = product.fetchone()
+    p_name = product[0]
+    type = product[1]
+    vendor = product[2]
+    p_description = product[3]
 
-    # fetch the db data for p_id
-    product = cur.execute('SELECT * FROM products WHERE p_id =' + p_id + ';')
-    keys = ('p_id', 'p_name', 'type', 'vendor', 'p_description')
-    product = (dict(zip(keys, data)) for data in product)
+    # fetch the db data for p_id's variants
+    variants = cur.execute('SELECT v_id, v_title, v_name, price, quantity FROM variants WHERE p_id =' + p_id + ';')
+
+    keys = ('v_id', 'v_title', 'v_name', 'price', 'quantity')
+    variants = (dict(zip(keys, variant)) for variant in variants)
+
+    fixed_variants = []
+    for variant in variants:
+        variant['price'] = format(variant['price'] * 0.01, ".2f")
+        fixed_variants.append(variant)
 
     parameters = {
         'p_id' : p_id,
         'p_name' : p_name,
-        'product' : product
+        'type' : type,
+        'vendor' : vendor,
+        'p_description' : p_description,
+        'variants' : fixed_variants
         }
 
     return template("product.html", **parameters)

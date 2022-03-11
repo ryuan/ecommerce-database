@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Nozama Ecommerce Database Project - New {{ p_name }} Variant Created</title>
+    <meta name="author" content="Ruoda Yuan">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/static/css/normalize.css">
+    <link rel="stylesheet" href="/static/css/barebones.css">
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
+</head>
+
+
+<body>
+
+    <div class="grid-container full">
+        <h1>Nozama Online Store Database</h1>
+        
+        <div><a href="/">← Home</a> / <a href="/product/{{ p_id }}">{{ p_name }}</a> / <a href="/product/{{ p_id }}/variants">Variants</a></div>
+
+        <h2>New Variant Created for {{ p_name }}</h2>
+
+        <form action="/product/{{ p_id }}/variants">
+            <input type="submit" value="Return to Variants" />
+        </form>
+
+        <table>
+            <tr>
+                <th>Variant Type:</th>
+                <td>{{ v_title }}</td>
+                <th>SKU:</th>
+                <td>{{ sku }}</td>
+            </tr>
+            <tr>
+                <th>Variant Name:</th>
+                <td>{{ v_name }}</td>
+                <th>Price (US$):</th>
+                <td>{{ price }}</td>
+            </tr>
+            <tr>
+                <td class="borderless"></td>
+                <td class="borderless"></td>
+                <th>Stock:</th>
+                <td>{{ quantity }}</td>
+            </tr>
+            <tr>
+                <td class="borderless"></td>
+                <td class="borderless"></td>
+                <th>Weight (lbs):</th>
+                <td>{{ weight }}</td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>

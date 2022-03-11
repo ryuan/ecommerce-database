@@ -18,7 +18,7 @@
     <div class="grid-container full">
         <h1>Nozama Online Store Database</h1>
 
-        <a href="/">← Back to Home</a>
+        <a href="/">← Home</a>
 
         <div>
             <h3>Search Products</h3>
@@ -38,18 +38,20 @@
                     <th> Product Name </th>
                     <th> Type </th>
                     <th> Vendor </th>
-                    <th> Edit </th>
+                    <th> Details </th>
                     <th> Delete </th>
                     <th> Variants </th>
+                    <th> New Variant </th>
                 </tr>
                 {% for result in results %}
                     <tr>
-                        <td> <a href="/product/{{ result.p_id }}">{{ result.p_name }}</a> </td>
+                        <td> {{ result.p_name }} </td>
                         <td> {{ result.type }} </td>
                         <td> {{ result.vendor }} </td>
-                        <td> <a href="/product/{{ result.p_id }}">Edit</a> </td>
+                        <td> <a href="/product/{{ result.p_id }}">View/Edit</a> </td>
                         <td> <a href="/delete?p_id={{ result.p_id }}">Delete</a> </td>
-                        <td> <a href="/product/{{ result.p_id }}/variants">View</a> </td>
+                        <td> <a href="/product/{{ result.p_id }}/variants">View/Edit</a> </td>
+                        <td> <a href="/product/{{ result.p_id }}/variants/create">Add New</a> </td>
                     </tr>
                 {% endfor %}
             </table>

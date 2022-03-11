@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Nozama Ecommerce Database Project - New Variant for {{ p_name }}</title>
+    <meta name="author" content="Ruoda Yuan">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/static/css/normalize.css">
+    <link rel="stylesheet" href="/static/css/barebones.css">
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
+</head>
+
+
+<body>
+
+    <div class="grid-container full">
+        <h1>Nozama Online Store Database</h1>
+        
+        <div><a href="/">← Home</a> / <a href="/product/{{ p_id }}">{{ p_name }}</a> / <a href="/product/{{ p_id }}/variants">Variants</a></div>
+
+        <h2>Add New Variant to {{ p_name }}</h2>
+
+        <form action = "/product/{{ p_id }}/variants/insert" method = "post">
+            <table class="center">
+                <tr>
+                    <th>Variant Type:</th>
+                    <td><input name = "v_title" type="text" /></td>
+                    <th>SKU:</th>
+                    <td><input name = "sku" type="text" /></td>
+                </tr>
+                <tr>
+                    <th>Variant Name:</th>
+                    <td><input name = "v_name" type="text" /></td>
+                    <th>Price (US$):</th>
+                    <td><input name = "price" type="number" step="0.01" min="0" /></td>
+                </tr>
+                <tr>
+                    <td class = "borderless"></td>
+                    <td class = "borderless"></td>
+                    <th>Stock:</th>
+                    <td><input name = "quantity" type="number" step="1" min="0" /></td>
+                </tr>
+                <tr>
+                    <td class = "borderless"></td>
+                    <td class = "borderless"></td>
+                    <th>Weight (lbs):</th>
+                    <td><input name = "weight" type="number" step="0.01" min="0" /></td>
+                </tr>
+            </table>
+            <p><input value = "Add New Variant" type = "submit" /></p>
+        </form>
+    </div>
+
+</body>
+</html>
