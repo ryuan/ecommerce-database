@@ -125,6 +125,58 @@ def variants(p_id):
     return template("variants.html", **parameters)
 
 
+@app.route('/create')
+@app.route('/create/')
+def create_pro():
+    return template("create_pro.html")
+
+
+@app.post('/insert')
+@app.post('/insert/')
+def insert_pro():
+    p_name = request.forms.get('p_name')
+    type = request.forms.get('type')
+    vendor = request.forms.get('vendor')
+    p_description = request.forms.get('p_description')
+
+    # insert new variant as tuple into variants table
+    cur.execute(f'INSERT INTO products (p_name, type, vendor, p_description) VALUES ("{p_name}", "{type}", "{vendor}", "{p_description}");')
+    con.commit()
+
+    # fetch the p_id of the most recently added tuple
+    row = cur.execute('SELECT last_insert_rowid();')
+    p_id = row.fetchone()[0]
+
+    parameters = {
+        'p_id' : p_id,
+        'p_name' : p_name,
+        'type' : type,
+        'vendor' : vendor,
+        'p_description' : p_description
+        }
+
+    return template("insert_pro.html", parameters)
+
+
+@app.route('/delete')
+@app.route('/delete/')
+def delete():
+    p_id = request.query.get('p_id')
+
+    # fetch just the name of the p_id product to display confirmation in view
+    product = cur.execute('SELECT p_name FROM products WHERE p_id =' + p_id + ';')
+    p_name = product.fetchone()[0]
+
+    cur.execute(f'DELETE FROM products WHERE p_id = { p_id };')
+    con.commit()
+
+    parameters = {
+        'p_name' : p_name,
+        }
+
+    return template("delete.html", parameters)
+
+
 @app.post('/product/<p_id>/update')
 @app.post('/product/<p_id>/update/')
 def update_pro(p_id):
@@ -146,25 +198,6 @@ def update_pro(p_id):
         }
 
     return template("update_pro.html", parameters)
-
-
-@app.route('/delete')
-@app.route('/delete/')
-def delete():
-    p_id = request.query.get('p_id')
-
-    # fetch just the name of the p_id product to display confirmation in view
-    product = cur.execute('SELECT p_name FROM products WHERE p_id =' + p_id + ';')
-    p_name = product.fetchone()[0]
-
-    cur.execute(f'DELETE FROM products WHERE p_id = { p_id };')
-    con.commit()
-
-    parameters = {
-        'p_name' : p_name,
-        }
-
-    return template("delete.html", parameters)
 
 
 @app.route('/product/<p_id>')

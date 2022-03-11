@@ -25,13 +25,14 @@
 
         <form action = "/product/{{ p_id }}/update" method="post" id="edit_product" style="margin-bottom: 0;">
             <div class="container space-between">
-                <span>Name:&nbsp;&nbsp;<input name="p_name" type="text" value="{{ p_name }}"/></span>
-                <span>Type:&nbsp;&nbsp;<input name="type" type="text" value="{{ type }}"/></span>
-                <span>Vendor:&nbsp;&nbsp;<input name="vendor" type="text" value="{{ vendor }}"/></span>
-                <span><input value = "Update" type = "submit" /></span>
+                <b>Name:&nbsp;&nbsp;<input name="p_name" type="text" value="{{ p_name }}"/></b>
+                <b>Type:&nbsp;&nbsp;<input name="type" type="text" value="{{ type }}"/></b>
+                <b>Vendor:&nbsp;&nbsp;<input name="vendor" type="text" value="{{ vendor }}"/></b>
+                <b><input value = "Update" type = "submit" /></b>
             </div>
         </form>
 
+        <b style="text-align: left;">Product Description:</b>
         <textarea name="p_description" form="edit_product">{{ p_description }}</textarea>
 
         <h4 style="margin-bottom: 0;">{{p_name}} Variants</h4>
