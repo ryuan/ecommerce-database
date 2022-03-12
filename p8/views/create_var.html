@@ -25,27 +25,27 @@
         <form action = "/product/{{ p_id }}/variants/insert" method = "post">
             <table class="center">
                 <tr>
-                    <th>Variant Type:</th>
+                    <th>Variant Type<span style="color:red">*</span>:</th>
                     <td><input name = "v_title" type="text" /></td>
                     <th>SKU:</th>
                     <td><input name = "sku" type="text" /></td>
                 </tr>
                 <tr>
-                    <th>Variant Name:</th>
+                    <th>Variant Name<span style="color:red">*</span>:</th>
                     <td><input name = "v_name" type="text" /></td>
-                    <th>Price (US$):</th>
+                    <th>Price (US$)<span style="color:red">*</span>:</th>
                     <td><input name = "price" type="number" step="0.01" min="0" /></td>
                 </tr>
                 <tr>
                     <td class = "borderless"></td>
                     <td class = "borderless"></td>
-                    <th>Stock:</th>
+                    <th>Stock<span style="color:red">*</span>:</th>
                     <td><input name = "quantity" type="number" step="1" min="0" /></td>
                 </tr>
                 <tr>
                     <td class = "borderless"></td>
                     <td class = "borderless"></td>
-                    <th>Weight (lbs):</th>
+                    <th>Weight (lbs)<span style="color:red">*</span>:</th>
                     <td><input name = "weight" type="number" step="0.01" min="0" /></td>
                 </tr>
             </table>

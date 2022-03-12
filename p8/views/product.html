@@ -25,7 +25,7 @@
 
         <form action = "/product/{{ p_id }}/update" method="post" id="edit_product" style="margin-bottom: 0;">
             <div class="container space-between">
-                <b>Name:&nbsp;&nbsp;<input name="p_name" type="text" value="{{ p_name }}"/></b>
+                <b>Name<span style="color:red">*</span>:&nbsp;&nbsp;<input name="p_name" type="text" value="{{ p_name }}"/></b>
                 <b>Type:&nbsp;&nbsp;<input name="type" type="text" value="{{ type }}"/></b>
                 <b>Vendor:&nbsp;&nbsp;<input name="vendor" type="text" value="{{ vendor }}"/></b>
                 <b><input value = "Update" type = "submit" /></b>

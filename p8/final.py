@@ -314,13 +314,17 @@ def search():
             queries["vendor"] += vendor.strip()
 
         results = cur.execute('SELECT p_id, p_name, type, vendor FROM products WHERE p_name LIKE "%' + p_name.strip() + '%" AND type LIKE \"%' + type.strip() + '%\" AND vendor LIKE \"%' + vendor.strip() + '%\" LIMIT 20;')
+        size = len(list(results))
+        print(size)
 
+        results = cur.execute('SELECT p_id, p_name, type, vendor FROM products WHERE p_name LIKE "%' + p_name.strip() + '%" AND type LIKE \"%' + type.strip() + '%\" AND vendor LIKE \"%' + vendor.strip() + '%\" LIMIT 20;')
         keys = ('p_id', 'p_name', 'type', 'vendor')
         results = (dict(zip(keys, result)) for result in results)
 
         parameters = {
             'queries' : queries,
             'results' : results,
+            'size' : size
             }
 
         return template("search.html", **parameters)
@@ -347,7 +351,7 @@ def index(page=0):
             'products' : products,
             'has_next' : end < total,
             'total_products' : total,
-            'query_string' : '?' + request.query_string,
+            'query_string' : '?' + request.query_string
             }
 
         return template('index.html', **parameters)

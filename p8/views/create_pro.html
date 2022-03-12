@@ -22,9 +22,11 @@
 
         <h2>Create New Product</h2>
 
+        <p>Note: product name is required - other fields are optional.</p>
+
         <form action = "/insert" method = "post" id="create_product" style="margin-bottom: 0;">
             <div class="container space-between">
-                <b>Name:&nbsp;&nbsp;<input name="p_name" type="text"/></b>
+                <b>Name<span style="color:red">*</span>:&nbsp;&nbsp;<input name="p_name" type="text"/></b>
                 <b>Type:&nbsp;&nbsp;<input name="type" type="text"/></b>
                 <b>Vendor:&nbsp;&nbsp;<input name="vendor" type="text"/></b>
                 <b><input value = "Update" type = "submit" /></b>

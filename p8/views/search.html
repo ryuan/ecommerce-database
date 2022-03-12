@@ -33,6 +33,7 @@
         <div>
             <h3>Product Search Results</h3>
             <h6>(note: limit to maximum of 20 search results)</h6>
+
             <table class="center">
                 <tr>
                     <th> Product Name </th>
@@ -53,6 +54,10 @@
                     </tr>
                 {% endfor %}
             </table>
+
+            {% if size == 0 %}
+                <p>No match for your search query. &#128528;</p>
+            {% endif %}
         </div>
     </div>
 
