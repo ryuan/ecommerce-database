@@ -37,7 +37,7 @@ CREATE TABLE variants (
     v_name varchar(255) NOT NULL,
     price integer NOT NULL,
     quantity integer NOT NULL,
-    weight integer,
+    weight integer NOT NULL,
     p_id integer,
     PRIMARY KEY (v_id),
     FOREIGN KEY (p_id) REFERENCES products(p_id) ON DELETE CASCADE
