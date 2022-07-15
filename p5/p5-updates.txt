@@ -1,8 +1,0 @@
-PROJECT UPDATES
----------------------------------------------
-
-After speaking to TA on Monday, I made some improvements to me relations.
-Specifically, the variants are no longer classified (incorrectly) as a weak entity.
-Orders now point to variants (rather than products) for its relationship.
-Thus, the previous ord_prod table is now replaced with the new ord_var table.
-Fake data generator has been updated to reflect these updates, as has all the .sql and .db files.
